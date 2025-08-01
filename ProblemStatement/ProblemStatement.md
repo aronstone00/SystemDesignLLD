@@ -46,4 +46,6 @@ Rider -> id, name, currentLocation
 Location -> from , to
 Cab -> id, driverName, location, isAvailable, vehicleType
 vehicleType -> SEDAN, GO, AUTO, BIKE
-Booking - id, Rider, Cab , pickupLocation, destinationLocation, bookingTime, fare, status 
+Booking - id, Rider, Cab , pickupLocation, destinationLocation, bookingTime, fare, status
+
+Chat GPT solve : https://chatgpt.com/share/688c8450-deec-8012-83a0-57a2ba696990
