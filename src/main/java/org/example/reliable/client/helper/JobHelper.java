@@ -2,10 +2,8 @@ package org.example.reliable.client.helper;
 
 import org.example.reliable.client.repo.JobDao;
 import org.example.reliable.client.repo.entity.JobEntity;
-import org.example.reliable.model.HandlerBaseRequest;
 import org.example.reliable.model.ReliableTaskRequest;
 import org.example.reliable.model.enums.TaskStatus;
-import org.example.reliable.util.HashUtil;
 import org.example.reliable.util.HandlerSerializationUtil;
 
 import java.util.Objects;
@@ -35,14 +33,14 @@ public class JobHelper {
                     .handlerName(request.getHandler().getClass().getSimpleName())
                     .payload(serializedPayload)
                     .status(TaskStatus.SUBMITTED.name())
-                    .payloadHash(HashUtil.convertIntoHash(serializedPayload))
+                    .payloadHash(serializedPayload)
                     .createdAt(System.currentTimeMillis())
                     .updatedAt(System.currentTimeMillis())
                     .build();
             jobDao.persist(jobEntity);
             return jobEntity;
         }
-        String reqHash = HashUtil.convertIntoHash(request.getPayload());
+        String reqHash = HandlerSerializationUtil.serialize(request.getPayload());;
         JobEntity persistedEntity = entityOpt.get();
         if (Objects.equals(persistedEntity.getPayloadHash(), reqHash)) {
             return persistedEntity;

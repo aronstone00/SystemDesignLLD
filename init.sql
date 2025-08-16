@@ -1,5 +1,5 @@
 -- Initialize the reliable_tasks database
-CREATE DATABASE IF NOT EXISTS reliable_tasks;
+CREATE DATABASE reliable_tasks;
 
 -- Connect to the reliable_tasks database
 \c reliable_tasks;

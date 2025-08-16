@@ -1,4 +1,4 @@
-package org.example.reliable.model.impl;
+package org.example.example.handlers.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +10,10 @@ import org.example.reliable.model.HandlerBaseRequest;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class SampleHandlerRequest extends HandlerBaseRequest {
-    private String message;
-    private int priority;
-    private boolean urgent;
+public class EmailHandlerRequest extends HandlerBaseRequest {
+    private String to;
+    private String subject;
+    private String body;
+    private String from;
+    private boolean isHtml;
 }

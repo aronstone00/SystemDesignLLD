@@ -62,8 +62,8 @@ public class HandlerSerializationUtil {
 
             return objectMapper.writeValueAsString(wrapper);
         } catch (JsonProcessingException e) {
-            log.error("Error serializing HandlerBaseRequest", e);
-            throw new RuntimeException("Failed to serialize HandlerBaseRequest", e);
+            log.error("Error serializing HandlerBaseResponse", e);
+            throw new RuntimeException("Failed to serialize HandlerBaseResponse", e);
         }
     }
     

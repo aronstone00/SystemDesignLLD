@@ -1,4 +1,4 @@
-package org.example.reliable.client.impl;
+package org.example.example.handlers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.reliable.client.Handler;
 import org.example.reliable.model.HandlerBaseRequest;
 import org.example.reliable.model.HandlerBaseResponse;
-import org.example.reliable.model.impl.SampleHandlerRequest;
+import org.example.example.handlers.request.SampleHandlerRequest;
 import org.example.reliable.util.HandlerSerializationUtil;
 
 @Slf4j
@@ -38,8 +38,8 @@ public class SampleHandler extends Handler {
     @Getter
     @Setter
     public static class SampleHandlerResponse extends HandlerBaseResponse {
-        private final boolean success;
-        private final String message;
+        private  boolean success;
+        private  String message;
         
         public SampleHandlerResponse(boolean success, String message) {
             super();

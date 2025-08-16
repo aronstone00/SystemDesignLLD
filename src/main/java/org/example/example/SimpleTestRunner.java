@@ -1,4 +1,4 @@
-package org.example.reliable;
+package org.example.example;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.reliable.client.Reliable;
@@ -6,14 +6,12 @@ import org.example.reliable.client.Task.TaskManager;
 import org.example.reliable.client.Task.impl.RedissonTaskManager;
 import org.example.reliable.client.helper.JobHelper;
 import org.example.reliable.client.impl.ReliableImpl;
-import org.example.reliable.client.impl.TestHandlers;
+import org.example.example.handlers.TestHandlers;
 import org.example.reliable.client.repo.JobDao;
 import org.example.reliable.client.repo.impl.PostgresJobDao;
 import org.example.reliable.model.ReliableTaskRequest;
 import org.example.reliable.model.ReliableTaskStatus;
-import org.example.reliable.model.impl.SampleHandlerRequest;
-
-import java.util.concurrent.TimeUnit;
+import org.example.example.handlers.request.SampleHandlerRequest;
 
 @Slf4j
 public class SimpleTestRunner {
@@ -30,7 +28,7 @@ public class SimpleTestRunner {
     
     public void runSimpleTest() {
         log.info("=== Starting Simple Reliable Test ===");
-        
+
         try {
             // Test 1: Submit a fast task
             log.info("--- Testing Fast Task ---");

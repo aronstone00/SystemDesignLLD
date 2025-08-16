@@ -45,7 +45,7 @@ docker-compose exec redis redis-cli ping
 #### Run the test:
 ```bash
 mvn clean compile
-mvn exec:java -Dexec.mainClass="org.example.reliable.SimpleTestRunner"
+mvn exec:java -Dexec.mainClass="org.example.example.SimpleTestRunner"
 ```
 
 #### Stop the containers:
@@ -192,7 +192,7 @@ To run with more verbose logging:
 export LOG_LEVEL=DEBUG
 
 # Run test with debug output
-mvn exec:java -Dexec.mainClass="org.example.reliable.SimpleTestRunner" -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+mvn exec:java -Dexec.mainClass="org.example.example.SimpleTestRunner" -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
 ```
 
 ## Performance Testing
