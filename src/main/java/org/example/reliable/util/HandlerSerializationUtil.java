@@ -100,7 +100,7 @@ public class HandlerSerializationUtil {
             Class<? extends HandlerBaseResponse> requestClass = responseTypeRegistry.get(wrapper.getType());
 
             if (requestClass == null) {
-                throw new RuntimeException("Unknown request type: " + wrapper.getType());
+                throw new RuntimeException("Unknown response type: " + wrapper.getType());
             }
 
             return objectMapper.readValue(wrapper.getData(), requestClass);

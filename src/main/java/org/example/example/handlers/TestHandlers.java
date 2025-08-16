@@ -17,20 +17,13 @@ public class TestHandlers {
     /**
      * Fast processing handler - completes quickly
      */
-    public static class FastHandler extends Handler {
+    public static class FastHandler extends Handler<SampleHandlerRequest, TestResponse> {
 
-        static {
-            HandlerSerializationUtil.registerRequestType("SampleHandlerRequest", SampleHandlerRequest.class);
-            HandlerSerializationUtil.registerResponseType("SampleHandlerResponse", SampleHandler.SampleHandlerResponse.class);
-            HandlerSerializationUtil.registerResponseType("TestResponse", TestResponse.class);
-            HandlerSerializationUtil.registerResponseType("TestResponse", TestResponse.class);
-        }
 
         @Override
-        public HandlerBaseResponse handle(HandlerBaseRequest request) {
-            if (request instanceof SampleHandlerRequest) {
-                SampleHandlerRequest sampleRequest = (SampleHandlerRequest) request;
-                log.info("FastHandler processing: {}", sampleRequest.getMessage());
+        public TestResponse handle(SampleHandlerRequest request) {
+            if (request != null) {
+                log.info("FastHandler processing: {}", request.getMessage());
 
                 // Simulate quick processing
                 try {
@@ -39,28 +32,31 @@ public class TestHandlers {
                     Thread.currentThread().interrupt();
                 }
 
-                return new TestResponse(true, "Fast processing completed: " + sampleRequest.getMessage());
+                return new TestResponse(true, "Fast processing completed: " + request.getMessage());
             }
             throw new IllegalArgumentException("Unsupported request type");
+        }
+
+        @Override
+        public Class<SampleHandlerRequest> getRequestType() {
+            return SampleHandlerRequest.class;
+        }
+
+        @Override
+        public Class<TestResponse> getResponseType() {
+            return TestResponse.class;
         }
     }
 
     /**
      * Slow processing handler - takes time to complete
      */
-    public static class SlowHandler extends Handler {
-
-        static {
-            HandlerSerializationUtil.registerRequestType("SampleHandlerRequest", SampleHandlerRequest.class);
-            HandlerSerializationUtil.registerResponseType("SampleHandlerResponse", SampleHandler.SampleHandlerResponse.class);
-            HandlerSerializationUtil.registerResponseType("TestResponse", TestResponse.class);
-        }
+    public static class SlowHandler extends Handler<SampleHandlerRequest, TestResponse> {
 
         @Override
-        public HandlerBaseResponse handle(HandlerBaseRequest request) {
-            if (request instanceof SampleHandlerRequest) {
-                SampleHandlerRequest sampleRequest = (SampleHandlerRequest) request;
-                log.info("SlowHandler processing: {}", sampleRequest.getMessage());
+        public TestResponse handle(SampleHandlerRequest request) {
+            if (request != null) {
+                log.info("SlowHandler processing: {}", request.getMessage());
 
                 // Simulate slow processing
                 try {
@@ -70,56 +66,64 @@ public class TestHandlers {
                     return new TestResponse(false, "Processing interrupted");
                 }
 
-                return new TestResponse(true, "Slow processing completed: " + sampleRequest.getMessage());
+                return new TestResponse(true, "Slow processing completed: " + request.getMessage());
             }
             throw new IllegalArgumentException("Unsupported request type");
+        }
+
+        @Override
+        public Class<SampleHandlerRequest> getRequestType() {
+            return SampleHandlerRequest.class;
+        }
+
+        @Override
+        public Class<TestResponse> getResponseType() {
+            return TestResponse.class;
         }
     }
 
     /**
      * Error-prone handler - sometimes fails
      */
-    public static class ErrorHandler extends Handler {
+    public static class ErrorHandler extends Handler<SampleHandlerRequest, TestResponse> {
 
-        static {
-            HandlerSerializationUtil.registerRequestType("SampleHandlerRequest", SampleHandlerRequest.class);
-            HandlerSerializationUtil.registerResponseType("SampleHandlerResponse", SampleHandler.SampleHandlerResponse.class);
-            HandlerSerializationUtil.registerResponseType("TestResponse", TestResponse.class);
-        }
 
         @Override
-        public HandlerBaseResponse handle(HandlerBaseRequest request) {
-            if (request instanceof SampleHandlerRequest) {
-                SampleHandlerRequest sampleRequest = (SampleHandlerRequest) request;
-                log.info("ErrorHandler processing: {}", sampleRequest.getMessage());
+        public TestResponse handle(SampleHandlerRequest request) {
+            if (request != null) {
+                log.info("ErrorHandler processing: {}", request.getMessage());
 
                 // Simulate random failures
                 if (Math.random() < 0.3) { // 30% chance of failure
                     throw new RuntimeException("Random processing error occurred");
                 }
 
-                return new TestResponse(true, "Error-prone processing completed: " + sampleRequest.getMessage());
+                return new TestResponse(true, "Error-prone processing completed: " + request.getMessage());
             }
             throw new IllegalArgumentException("Unsupported request type");
+        }
+
+        @Override
+        public Class<SampleHandlerRequest> getRequestType() {
+            return SampleHandlerRequest.class;
+        }
+
+        @Override
+        public Class<TestResponse> getResponseType() {
+            return TestResponse.class;
         }
     }
 
     /**
      * Batch processing handler - processes multiple items
      */
-    public static class BatchHandler extends Handler {
+    public static class BatchHandler extends Handler<SampleHandlerRequest, TestResponse> {
 
-        static {
-            HandlerSerializationUtil.registerRequestType("SampleHandlerRequest", SampleHandlerRequest.class);
-            HandlerSerializationUtil.registerResponseType("SampleHandlerResponse", SampleHandler.SampleHandlerResponse.class);
-            HandlerSerializationUtil.registerResponseType("TestResponse", TestResponse.class);
-        }
 
         @Override
-        public HandlerBaseResponse handle(HandlerBaseRequest request) {
-            if (request instanceof SampleHandlerRequest) {
-                SampleHandlerRequest sampleRequest = (SampleHandlerRequest) request;
-                log.info("BatchHandler processing: {}", sampleRequest.getMessage());
+        public TestResponse handle(SampleHandlerRequest request) {
+            if (request != null) {
+                log.info("BatchHandler processing: {}", request.getMessage());
 
                 // Simulate batch processing
                 try {
@@ -128,9 +132,19 @@ public class TestHandlers {
                     Thread.currentThread().interrupt();
                 }
 
-                return new TestResponse(true, "Batch processing completed: " + sampleRequest.getMessage());
+                return new TestResponse(true, "Batch processing completed: " + request.getMessage());
             }
             throw new IllegalArgumentException("Unsupported request type");
+        }
+
+        @Override
+        public Class<SampleHandlerRequest> getRequestType() {
+            return SampleHandlerRequest.class;
+        }
+
+        @Override
+        public Class<TestResponse> getResponseType() {
+            return TestResponse.class;
         }
     }
 

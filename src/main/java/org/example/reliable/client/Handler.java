@@ -6,16 +6,18 @@ import org.example.reliable.util.HandlerSerializationUtil;
 
 import static org.example.reliable.util.HandlerUtil.registerHandler;
 
-public abstract class Handler {
+public abstract class Handler<T extends HandlerBaseRequest, R extends HandlerBaseResponse> {
 
     public Handler() {
         registerHandler(this);
+        HandlerSerializationUtil.registerRequestType(getRequestType().getSimpleName(), getRequestType());
+        HandlerSerializationUtil.registerResponseType(getResponseType().getSimpleName(), getResponseType());
     }
 
-    /**
-     * Handle the request with proper type safety
-     * @param request The typed request object
-     * @return Response from the handler
-     */
-    public abstract HandlerBaseResponse handle(HandlerBaseRequest request);
+
+    public abstract R handle(T request);
+
+    public abstract Class<T> getRequestType();
+
+    public abstract Class<R> getResponseType();
 }

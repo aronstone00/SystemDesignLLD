@@ -2,6 +2,7 @@ package org.example.reliable.client.Task.impl;
 
 import lombok.Data;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.example.reliable.client.Handler;
 import org.example.reliable.client.Task.TaskManager;
 import org.example.reliable.client.config.RedissonConfig;
@@ -22,12 +23,13 @@ import java.util.concurrent.Executors;
 @Data
 
 //todo : make this singelton
+@Slf4j
 public class RedissonTaskManager implements TaskManager {
 
 
     private final int parallelTask = 5;
     private final RedissonClient redissonClient;
-    private final Long handlerTimeoutInMs = 30000L;
+    private final Long handlerTimeoutInMs = 3000L;
     
     private RQueue<String> taskQueue;
     private RQueue<ProcessingQueuePayload> processingQueue;
@@ -104,6 +106,7 @@ public class RedissonTaskManager implements TaskManager {
 
 
     private void updateJobToFailure(JobEntity entity, String reason) {
+        log.info("marking jobId to failure -{} fue to reason -{}",entity.getJobId(),reason);
         entity.setStatus(TaskStatus.FAILURE.name());
         entity.setError(reason);
         jobHelper.update(entity);
@@ -127,6 +130,7 @@ public class RedissonTaskManager implements TaskManager {
             response = taskHandler.handle(request);
         } catch (Exception ex) {
             updateJobToFailure(entity, ex.getMessage());
+            return;
         }
 
 

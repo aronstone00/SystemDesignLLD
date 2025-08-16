@@ -33,33 +33,33 @@ public class SimpleTestRunner {
             // Test 1: Submit a fast task
             log.info("--- Testing Fast Task ---");
             SampleHandlerRequest request = new SampleHandlerRequest("Hello World", 1, false);
-            ReliableTaskRequest taskRequest = new ReliableTaskRequest(request, "test3-ref-1", new TestHandlers.FastHandler());
+            ReliableTaskRequest taskRequest = new ReliableTaskRequest(request, "test1-ref-1", new TestHandlers.FastHandler());
             
             String jobId = reliable.submit(taskRequest);
             log.info("Submitted task with jobId: {}", jobId);
             
             // Wait a bit and check status
             Thread.sleep(2000);
-            ReliableTaskStatus status = reliable.status("test3-ref-1");
+            ReliableTaskStatus status = reliable.status("test1-ref-1");
             log.info("Task status: {} - {}", status.getStatus(), status.getResponse());
             
             // Test 2: Submit a slow task
             log.info("--- Testing Slow Task ---");
             SampleHandlerRequest slowRequest = new SampleHandlerRequest("Slow processing", 5, true);
-            ReliableTaskRequest slowTaskRequest = new ReliableTaskRequest(slowRequest, "test3-ref-2", new TestHandlers.SlowHandler());
+            ReliableTaskRequest slowTaskRequest = new ReliableTaskRequest(slowRequest, "test1-ref-2", new TestHandlers.SlowHandler());
             
             String slowJobId = reliable.submit(slowTaskRequest);
             log.info("Submitted slow task with jobId: {}", slowJobId);
             
             // Check status immediately (should be processing)
-            status = reliable.status("test3-ref-2");
+            status = reliable.status("test1-ref-2");
             log.info("Slow task status: {} - {}", status.getStatus(), status.getResponse());
             
             // Test 3: Submit multiple tasks
             log.info("--- Testing Multiple Tasks ---");
             for (int i = 1; i <= 3; i++) {
                 SampleHandlerRequest multiRequest = new SampleHandlerRequest("Task " + i, i, false);
-                ReliableTaskRequest multiTaskRequest = new ReliableTaskRequest(multiRequest, "test3-ref-multi-" + i, new TestHandlers.FastHandler());
+                ReliableTaskRequest multiTaskRequest = new ReliableTaskRequest(multiRequest, "test1-ref-multi-" + i, new TestHandlers.FastHandler());
                 
                 String multiJobId = reliable.submit(multiTaskRequest);
                 log.info("Submitted task {} with jobId: {}", i, multiJobId);
@@ -70,7 +70,7 @@ public class SimpleTestRunner {
             
             // Check status of all tasks
             for (int i = 1; i <= 3; i++) {
-                status = reliable.status("test3-ref-multi-" + i);
+                status = reliable.status("test1-ref-multi-" + i);
                 log.info("Task {} status: {} - {}", i, status.getStatus(), status.getResponse());
             }
             
